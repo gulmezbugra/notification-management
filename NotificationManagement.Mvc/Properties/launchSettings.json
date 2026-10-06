@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "NotificationManagement.Mvc": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:20875;http://localhost:20876"
+    }
+  }
+}

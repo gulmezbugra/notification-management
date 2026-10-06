@@ -1,0 +1,11 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="panel text-center error-panel">
+    <div class="error-code">@Model.StatusCode</div>
+    <h2 class="h4">@Model.Title</h2>
+    <p class="text-muted">@Model.Message</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to dashboard</a>
+</div>

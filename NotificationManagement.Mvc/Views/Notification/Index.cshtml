@@ -1,0 +1,121 @@
+@model NotificationListViewModel
+@{
+    ViewData["Title"] = "Notification History";
+}
+
+<div class="panel mb-3">
+    <form method="get" asp-action="Index" class="row g-2 align-items-end">
+        <div class="col-12 col-md-4">
+            <label class="form-label small text-muted">Search receiver</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" name="search" value="@Model.Search" class="form-control" placeholder="Email, phone, token..." />
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label small text-muted">Type</label>
+            <select name="type" class="form-select">
+                <option value="">All types</option>
+                @foreach (var t in Enum.GetValues<NotificationType>())
+                {
+                    <option value="@t" selected="@(Model.Type == t)">@t.Label()</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label small text-muted">Status</label>
+            <select name="status" class="form-select">
+                <option value="">All statuses</option>
+                @foreach (var s in Enum.GetValues<NotificationStatus>())
+                {
+                    <option value="@s" selected="@(Model.Status == s)">@s</option>
+                }
+            </select>
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label small text-muted">Sort by date</label>
+            <select name="sort" class="form-select">
+                <option value="date_desc" selected="@(Model.Sort == "date_desc")">Newest first</option>
+                <option value="date_asc" selected="@(Model.Sort == "date_asc")">Oldest first</option>
+            </select>
+        </div>
+        <div class="col-6 col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-fill">Filter</button>
+            <a asp-action="Index" class="btn btn-outline-secondary" title="Reset"><i class="bi bi-arrow-counterclockwise"></i></a>
+        </div>
+    </form>
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <h2 class="panel-title">
+            All notifications
+            <span class="text-muted fw-normal">
+                (@Model.TotalCount)
+            </span>
+        </h2>
+        <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-plus-lg"></i> New notification</a>
+    </div>
+
+    @if (Model.Items.Any())
+    {
+        <partial name="_NotificationTable" model="Model.Items" />
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-search"></i>
+            <p>No notifications match your filters.</p>
+        </div>
+    }
+
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4" aria-label="Notification pagination">
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-search="@Model.Search"
+                       asp-route-type="@Model.Type"
+                       asp-route-status="@Model.Status"
+                       asp-route-sort="@Model.Sort"
+                       asp-route-page="@(Model.CurrentPage - 1)">
+                        Previous
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-search="@Model.Search"
+                           asp-route-type="@Model.Type"
+                           asp-route-status="@Model.Status"
+                           asp-route-sort="@Model.Sort"
+                           asp-route-page="@i">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-search="@Model.Search"
+                       asp-route-type="@Model.Type"
+                       asp-route-status="@Model.Status"
+                       asp-route-sort="@Model.Sort"
+                       asp-route-page="@(Model.CurrentPage + 1)">
+                        Next
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    }
+
+</div>

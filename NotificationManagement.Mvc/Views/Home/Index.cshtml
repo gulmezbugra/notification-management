@@ -1,0 +1,63 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-primary-soft text-primary"><i class="bi bi-bell"></i></div>
+            <div>
+                <div class="stat-label">Total notifications</div>
+                <div class="stat-value">@Model.Total</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-success-soft text-success"><i class="bi bi-check-circle"></i></div>
+            <div>
+                <div class="stat-label">Sent</div>
+                <div class="stat-value">@Model.Sent</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-danger-soft text-danger"><i class="bi bi-x-circle"></i></div>
+            <div>
+                <div class="stat-label">Failed</div>
+                <div class="stat-value">@Model.Failed</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-warning-soft text-warning"><i class="bi bi-hourglass-split"></i></div>
+            <div>
+                <div class="stat-label">Pending</div>
+                <div class="stat-value">@Model.Pending</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <h2 class="panel-title">Recent activity</h2>
+        <a asp-controller="Notification" asp-action="Index" class="btn btn-sm btn-outline-secondary">View all</a>
+    </div>
+
+    @if (Model.Recent.Any())
+    {
+        <partial name="_NotificationTable" model="Model.Recent" />
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>No notifications yet.</p>
+            <a asp-controller="Notification" asp-action="Create" class="btn btn-primary">Send your first notification</a>
+        </div>
+    }
+</div>

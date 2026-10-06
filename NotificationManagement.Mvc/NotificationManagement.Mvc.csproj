@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>ce7bd3a7-f68f-40b5-8f08-5ad73199ef7d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Needed by the "dotnet ef" tool (startup project) -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationManagement.Core\NotificationManagement.Core.csproj" />
+    <ProjectReference Include="..\NotificationManagement.Data\NotificationManagement.Data.csproj" />
+    <ProjectReference Include="..\NotificationManagement.Business\NotificationManagement.Business.csproj" />
+  </ItemGroup>
+
+</Project>

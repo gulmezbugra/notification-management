@@ -1,0 +1,58 @@
+@model NotificationItemViewModel
+@{
+    ViewData["Title"] = $"Notification #{Model.Id}";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-9 col-xl-7">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Notification details</h2>
+                <partial name="_StatusBadge" model="Model.Status" />
+            </div>
+
+            @if (Model.Status == NotificationStatus.Failed)
+            {
+                <div class="alert alert-danger">
+                    <strong><i class="bi bi-exclamation-triangle-fill me-1"></i> Delivery failed.</strong>
+                    <div class="mt-1">@(Model.ErrorMessage ?? "The notification could not be delivered.")</div>
+                </div>
+            }
+
+            <dl class="row detail-list mb-0">
+                <dt class="col-sm-4">ID</dt>
+                <dd class="col-sm-8">#@Model.Id</dd>
+
+                <dt class="col-sm-4">Type</dt>
+                <dd class="col-sm-8"><partial name="_TypeBadge" model="Model.Type" /></dd>
+
+                <dt class="col-sm-4">Receiver</dt>
+                <dd class="col-sm-8">@Model.Receiver</dd>
+
+                <dt class="col-sm-4">Message</dt>
+                <dd class="col-sm-8 message-full">@Model.Message</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8"><partial name="_StatusBadge" model="Model.Status" /></dd>
+
+                <dt class="col-sm-4">Created</dt>
+                <dd class="col-sm-8">@Model.CreatedAt.ToString("dd MMM yyyy HH:mm:ss")</dd>
+
+                <dt class="col-sm-4">Sent</dt>
+                <dd class="col-sm-8">@(Model.SentAt?.ToString("dd MMM yyyy HH:mm:ss") ?? "—")</dd>
+
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <dt class="col-sm-4">Error</dt>
+                    <dd class="col-sm-8 text-danger">@Model.ErrorMessage</dd>
+                }
+            </dl>
+
+            <hr />
+            <div class="d-flex gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to history</a>
+                <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> New notification</a>
+            </div>
+        </div>
+    </div>
+</div>

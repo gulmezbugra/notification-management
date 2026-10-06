@@ -1,0 +1,51 @@
+@model CreateNotificationViewModel
+@{
+    ViewData["Title"] = "New Notification";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-6">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Send a notification</h2>
+            </div>
+
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Type" class="form-label"></label>
+                    <select asp-for="Type" asp-items="Model.TypeOptions" class="form-select" id="typeSelect">
+                        <option value="">Select a type...</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Receiver" class="form-label"></label>
+                    <input asp-for="Receiver" class="form-control" id="receiverInput" placeholder="Receiver" />
+                    <div class="form-text" id="receiverHint">Choose a type to see the expected receiver format.</div>
+                    <span asp-validation-for="Receiver" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Message" class="form-label"></label>
+                    <textarea asp-for="Message" class="form-control" rows="5" placeholder="Write your message..."></textarea>
+                    <div class="form-text">Tip: include <code>[fail]</code> in the message to simulate a provider failure.</div>
+                    <span asp-validation-for="Message" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Send notification</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+}
