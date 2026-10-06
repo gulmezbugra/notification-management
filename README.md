@@ -1,6 +1,6 @@
 # Notification Management System
 
-ASP.NET Core MVC (.NET 10) - N-Tier - Factory Pattern - EF Core - SQL Server.
+ASP.NET Core MVC (.NET 9) - N-Tier - Factory Pattern - EF Core - SQL Server.
 
 ## Run
 
